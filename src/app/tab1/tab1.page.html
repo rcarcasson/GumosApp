@@ -1,0 +1,24 @@
+<ion-header no-border>
+    <ion-toolbar color="primary">
+        <ion-title class="fuente-cell">Gumos App</ion-title>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="cargando">
+    <ion-grid>
+        <ion-row>
+            <ion-col col="12" text-center>
+                <img src="../../assets/loading.svg"> Cargando posiciones actual...
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-content *ngIf="!cargando">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Deslizar para actualizar" refreshingSpinner="circles" refreshingText="Actualizando...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <app-lista-miembros [info]="infoClan"></app-lista-miembros>
+</ion-content>

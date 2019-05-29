@@ -1,0 +1,56 @@
+<ion-header no-border>
+    <ion-toolbar color="primary">
+        <ion-thumbnail *ngIf="!cargando" slot="start">
+            <img src="{{ gumos[0].badge.image }}">
+        </ion-thumbnail>
+        <ion-title *ngIf="!cargando">
+            {{gumos[0].name}}
+        </ion-title>
+        <ion-badge *ngIf="!cargando">{{gumos[0].rank}}</ion-badge>
+        <ion-icon *ngIf="!cargando" name="{{ gumos[0].rank | rankupdown: gumos[0].previousRank }}"></ion-icon>
+        <ion-badge *ngIf="!cargando">{{ gumos[0].previousRank | rankcalc: gumos[0].rank }}</ion-badge>
+        <ion-thumbnail slot="end" *ngIf="!cargando">
+            <img src="../../assets/cr-trophies.png">
+        </ion-thumbnail>
+        <ion-badge *ngIf="!cargando" slot="end">{{gumos[0].score}}</ion-badge>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="cargando">
+    <ion-grid>
+        <ion-row>
+            <ion-col col="12" text-center>
+                <img src="../../assets/loading.svg"> Cargando a los más tops de Chile
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-content *ngIf="!cargando">
+    <ion-list lines="none">
+        <ion-item-group *ngFor="let clan of mostrarClanes">
+            <ion-item-divider color="{{ clan.rank | top3: clan.tag }}">
+                <ion-thumbnail slot="start">
+                    <img src="{{ clan.badge.image }}">
+                </ion-thumbnail>
+                {{ clan.name }}
+            </ion-item-divider>
+
+            <ion-item>
+                <ion-badge color="{{ clan.rank | top3 }}">{{ clan.rank }}</ion-badge>
+                <ion-icon name="{{ clan.rank | rankupdown: clan.previousRank }}"></ion-icon>
+                <ion-badge>{{ clan.previousRank | rankcalc: clan.rank }}</ion-badge>
+                <ion-label>{{clan.memberCount}}/50</ion-label>
+                <ion-thumbnail>
+                    <img src="../../assets/cr-trophies.png">
+                </ion-thumbnail>
+                <ion-label>{{clan.score}}</ion-label>
+            </ion-item>
+        </ion-item-group>
+    </ion-list>
+
+    <ion-infinite-scroll threshold="300px" (ionInfinite)="cargarSiguientes($event)">
+        <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

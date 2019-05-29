@@ -1,0 +1,13 @@
+<ion-list>
+    <ion-item *ngFor="let miembros of info[0].members, let i of index" (click)="verDetalles(i)" class="animated fadeIn fast">
+        <!-- <ion-badge slot="start" color="tertiary">{{miembros.rank}} - {{miembros.previousRank}}</ion-badge> -->
+        <ion-thumbnail slot="start">
+            <img [src]="imgArena(miembros.arena.arenaID)">
+        </ion-thumbnail>
+        <ion-label>{{miembros.name}}</ion-label>
+        <ion-thumbnail slot="end">
+            <img src="https://royaleapi.com/static/img/ui/trophy.png" class="copa">
+            <ion-badge color="dark">{{miembros.trophies}}</ion-badge>
+        </ion-thumbnail>
+    </ion-item>
+</ion-list>

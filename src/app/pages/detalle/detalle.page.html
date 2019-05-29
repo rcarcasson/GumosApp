@@ -1,0 +1,223 @@
+<ion-header no-border>
+    <ion-toolbar color="primary">
+        <ion-thumbnail slot="start">
+            <img [src]="imgArena(id.arena.arenaID)">
+        </ion-thumbnail>
+        <ion-title>{{id.name}}</ion-title>
+        <ion-thumbnail slot="end">
+            <img src="https://royaleapi.com/static/img/ui/trophy.png" class="copa">
+            <ion-label>{{id.trophies}}</ion-label>
+        </ion-thumbnail>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col size="6" text-center>
+                <ion-card color="primary">
+                    <ion-card-content text-center>
+                        <img src='https://royaleapi.github.io/cr-api-assets/badges/A_Char_King_03.png'>
+                    </ion-card-content>
+                    <ion-card-subtitle>Nivel de Rey</ion-card-subtitle>
+                    <ion-card-title>{{id.expLevel}}</ion-card-title>
+                </ion-card>
+            </ion-col>
+            <ion-col size="6" text-center>
+                <ion-card color="primary">
+                    <ion-card-content text-center>
+                        <img src='https://royaleapi.github.io/cr-api-assets/badges/Crown_02.png'>
+                    </ion-card-content>
+                    <ion-card-subtitle>Coronas</ion-card-subtitle>
+                    <ion-card-title>{{id.trophies}}</ion-card-title>
+                </ion-card>
+
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-icon slot="start" name="arrow-round-forward" color="primary"></ion-icon>
+                    <ion-label>Donaciones hechas</ion-label>
+                    <ion-note slot="end" color="success">{{id.donations}}</ion-note>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-icon slot="start" name="arrow-round-back" color="primary"></ion-icon>
+                    <ion-label text-wrap>Donaciones recibidas</ion-label>
+                    <ion-note slot="end" color="success">{{id.donationsReceived}}</ion-note>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-card>
+        <ion-card-header *ngIf="!cargandoStats">
+            Partidas totales: {{gumosStats[0].games.total}}
+        </ion-card-header>
+        <ion-card-content>
+
+            <canvas #partidas></canvas>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header *ngIf="!cargandoStats">
+            Est. de Temporada
+        </ion-card-header>
+        <ion-card-content>
+
+            <canvas #liga></canvas>
+        </ion-card-content>
+    </ion-card>
+
+
+    <ion-item *ngIf="!cargandoStats">
+        <ion-label>Mazo</ion-label>
+    </ion-item>
+
+    <ion-grid *ngIf="!cargandoStats" padding>
+        <ion-row>
+            <ion-col text-center>
+                <img src={{gumosStats[0].currentDeck[0].icon}}>
+            </ion-col>
+            <ion-col>
+                <img src={{gumosStats[0].currentDeck[1].icon}}>
+            </ion-col>
+            <ion-col>
+                <img src={{gumosStats[0].currentDeck[2].icon}}>
+            </ion-col>
+            <ion-col>
+                <img src={{gumosStats[0].currentDeck[3].icon}}>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-center>
+                <img src={{gumosStats[0].currentDeck[4].icon}}>
+            </ion-col>
+            <ion-col>
+                <img src={{gumosStats[0].currentDeck[5].icon}}>
+
+            </ion-col>
+            <ion-col>
+                <img src={{gumosStats[0].currentDeck[6].icon}}>
+            </ion-col>
+            <ion-col>
+                <img src={{gumosStats[0].currentDeck[7].icon}}>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-item>
+        <ion-label>Carta favorita</ion-label>
+    </ion-item>
+    <ion-grid>
+        <ion-row>
+            <ion-col text-center>
+                <img *ngIf="!cargandoStats" src={{gumosStats[0].stats.favoriteCard.icon}} class="favorita">
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-item>
+        <ion-label>Cofres a obtener</ion-label>
+    </ion-item>
+
+
+    <ion-slides [options]="slideOpts" *ngIf="!cargandoCofres">
+        <ion-slide *ngFor="let cof of cofres[0].upcoming">
+            <img [src]="cof | cofreImagen">
+        </ion-slide>
+    </ion-slides>
+    <ion-slides [options]="slideOpts2" *ngIf="!cargandoCofres">
+        <ion-slide *ngIf="cofres[0].epic > 0">
+            <ion-grid>
+                <ion-row text-center>
+                    <ion-col><img [src]="'epic' | cofreImagen"></ion-col>
+                </ion-row>
+                <ion-row text-center>
+                    <ion-col>
+                        <ion-badge color="light">
+                            + {{cofres[0].epic}}
+                        </ion-badge>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-slide>
+        <ion-slide *ngIf="cofres[0].giant > 0">
+            <ion-grid>
+                <ion-row text-center>
+                    <ion-col><img [src]="'giant' | cofreImagen"></ion-col>
+                </ion-row>
+                <ion-row text-center>
+                    <ion-col>
+                        <ion-badge color="light">
+                            + {{cofres[0].giant}}
+                        </ion-badge>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-slide>
+        <ion-slide *ngIf="cofres[0].legendary > 0">
+            <ion-grid>
+                <ion-row text-center>
+                    <ion-col><img [src]="'legendary' | cofreImagen"></ion-col>
+                </ion-row>
+                <ion-row text-center>
+                    <ion-col>
+                        <ion-badge color="light">
+                            + {{cofres[0].legendary}}
+                        </ion-badge>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-slide>
+        <ion-slide *ngIf="cofres[0].magical > 0">
+            <ion-grid>
+                <ion-row text-center>
+                    <ion-col><img [src]="'magical' | cofreImagen"></ion-col>
+                </ion-row>
+                <ion-row text-center>
+                    <ion-col>
+                        <ion-badge color="light">
+                            + {{cofres[0].magical}}
+                        </ion-badge>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-slide>
+        <ion-slide *ngIf="cofres[0].megaLightning > 0">
+            <ion-grid>
+                <ion-row text-center>
+                    <ion-col><img [src]="'megaLightning' | cofreImagen"></ion-col>
+                </ion-row>
+                <ion-row text-center>
+                    <ion-col>
+                        <ion-badge color="light">
+                            + {{cofres[0].megaLightning}}
+                        </ion-badge>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-slide>
+    </ion-slides>
+
+</ion-content>
+
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="regresar()">
+                <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+                <ion-label>Regresar</ion-label>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

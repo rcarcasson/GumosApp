@@ -1,0 +1,7 @@
+{
+  "name": "gumosApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
