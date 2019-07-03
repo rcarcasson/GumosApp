@@ -38,4 +38,8 @@ export class ServiciosService {
   playerStats(tag: string) {
     return this.http.get(`${url}/player/${tag}`, {headers});
   }
+
+  warHistory() {
+    return this.http.get(`${url}/clan/QU89QL/warlog`, {headers});
+  }
 }

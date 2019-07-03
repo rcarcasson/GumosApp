@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiciosService } from '../services/servicios.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import 'moment/locale/es';
+import { HistoryPage } from '../pages/history/history.page';
 
 @Component({
   selector: 'app-tab2',
@@ -18,7 +19,7 @@ export class Tab2Page implements OnInit {
   banner = '';
   termino = '';
 
-  constructor (private servicios: ServiciosService, private alertController: AlertController) {}
+  constructor (private servicios: ServiciosService, private alertController: AlertController, private modalCtrl: ModalController) {}
 
   async ngOnInit() {
     await this.servicios.warStats().subscribe((resp: any) => {
@@ -91,4 +92,12 @@ export class Tab2Page implements OnInit {
     }));
 
   }
+
+  async verHistorico() {
+    const modal = await this.modalCtrl.create({
+      component: HistoryPage
+    });
+    modal.present();
+  }
+
 }

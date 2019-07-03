@@ -1,0 +1,53 @@
+<ion-header no-border>
+    <ion-toolbar color="primary">
+        <ion-title>Historico de Guerras</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="cargando">
+    <ion-grid>
+        <ion-row>
+            <ion-col col="12" text-center>
+                <img src="../../assets/loading.svg"> Espere...
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-content *ngIf="!cargando">
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-img src="assets/registro.png"></ion-img>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-list>
+        <ion-item>
+            <ion-label>Rata a sapear</ion-label>
+            <ion-select placeholder="Seleccione" okText="Ver" cancelText="Cerrar" (ionChange)="mostrar()">
+                <ion-select-option *ngFor="let ratas of miembros" value="{{ratas.tag}}">{{ ratas.name }}</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    <ion-card color="primary">
+        <ion-card-header>
+            <ion-card-subtitle>
+                <h6>Basado en ult. 10 guerras</h6>
+            </ion-card-subtitle>
+            <ion-card-content>
+                Total de cartas obtenidas: {{ totalCartas }} <br> Total de victorias de Guerra: {{ totalVictorias }} <br> Efectividad: {{ porcentajeVictorias }} %
+            </ion-card-content>
+        </ion-card-header>
+    </ion-card>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="regresar()">
+                <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+                <ion-label>Regresar</ion-label>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>
